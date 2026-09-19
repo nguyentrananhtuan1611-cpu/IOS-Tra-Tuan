@@ -9,21 +9,21 @@ struct ContentView: View {
     let isStudent = true
 
     var body: some View {
-
         VStack {
 
             ZStack {
-
                 Rectangle()
                     .fill(Color.blue.opacity(0.2))
                     .frame(height: 180)
 
                 VStack {
-
                     Image(systemName: "graduationcap.fill")
                         .font(.system(size: 60))
                         .padding()
-                        .background(Circle().fill(Color.white))
+                        .background(
+                            Circle()
+                                .fill(Color.white)
+                        )
 
                     Text(name)
                         .font(.title2)
@@ -37,20 +37,14 @@ struct ContentView: View {
             VStack(spacing: 15) {
 
                 HStack {
-
                     Label(studentID, systemImage: "person.fill")
-
                     Spacer()
-
                     Label("\(age)", systemImage: "birthday.cake.fill")
                 }
 
                 HStack {
-
                     Label("\(gpa)", systemImage: "chart.bar.fill")
-
                     Spacer()
-
                     Label(
                         isStudent ? "Yes" : "No",
                         systemImage: "graduationcap.fill"
@@ -61,7 +55,6 @@ struct ContentView: View {
                     .padding()
 
                 Button("Edit Profile") {
-
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -97,8 +90,4 @@ struct ContentView: View {
             .padding()
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
