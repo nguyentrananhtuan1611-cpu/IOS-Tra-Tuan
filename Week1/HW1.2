@@ -1,1 +1,87 @@
+import SwiftUI
 
+struct Task: Identifiable {
+    let id = UUID()
+    let title: String
+    let category: String
+    let isCompleted: Bool
+    let time: String
+}
+
+struct ContentView: View {
+
+    @State var tasks = [
+        Task(title: "Read chapter 2", category: "Study", isCompleted: false, time: "09:00"),
+        Task(title: "Workout", category: "Health", isCompleted: true, time: "17:00"),
+        Task(title: "Finish lab report", category: "Work", isCompleted: false, time: "20:00")
+    ]
+
+    var body: some View {
+
+        VStack {
+
+            Text("Nguyen Van A")
+                .font(.largeTitle)
+                .bold()
+
+            Text("Discipline today creates a brighter tomorrow.")
+                .foregroundColor(.green)
+
+            HStack {
+
+                Text("My Tasks")
+                    .font(.title2)
+
+                Spacer()
+
+                Button("Add Task") {
+                    tasks.append(
+                        Task(
+                            title: "New Task",
+                            category: "Personal",
+                            isCompleted: false,
+                            time: "21:00"
+                        )
+                    )
+                }
+            }
+            .padding()
+
+            List(tasks) { task in
+
+                HStack {
+
+                    Image(systemName:
+                            task.isCompleted
+                          ? "checkmark.circle.fill"
+                          : "circle")
+
+                    VStack(alignment: .leading) {
+                        Text(task.title)
+                        Text(task.category)
+                            .font(.caption)
+                    }
+
+                    Spacer()
+
+                    Text(task.time)
+                }
+            }
+
+            HStack {
+                Spacer()
+                Text("Today")
+                Spacer()
+                Text("Stats")
+                Spacer()
+                Text("Settings")
+                Spacer()
+            }
+            .padding()
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
