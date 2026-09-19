@@ -1,80 +1,97 @@
 import SwiftUI
 
-struct Task: Identifiable {
-    let id = UUID()
-    let title: String
-    let category: String
-    let isCompleted: Bool
-    let time: String
-}
-
 struct ContentView: View {
 
-    @State var tasks = [
-        Task(title: "Read chapter 2", category: "Study", isCompleted: false, time: "09:00"),
-        Task(title: "Workout", category: "Health", isCompleted: true, time: "17:00"),
-        Task(title: "Finish lab report", category: "Work", isCompleted: false, time: "20:00")
-    ]
+    let name = "Nguyen Van A"
+    let studentID = "23110001"
+    let age = 18
+    let gpa = 8.5
+    let isStudent = true
 
     var body: some View {
 
         VStack {
 
-            Text("Nguyen Van A")
-                .font(.largeTitle)
-                .bold()
+            ZStack {
 
-            Text("Discipline today creates a brighter tomorrow.")
-                .foregroundColor(.green)
+                Rectangle()
+                    .fill(Color.blue.opacity(0.2))
+                    .frame(height: 180)
 
-            HStack {
+                VStack {
 
-                Text("My Tasks")
-                    .font(.title2)
+                    Image(systemName: "graduationcap.fill")
+                        .font(.system(size: 60))
+                        .padding()
+                        .background(Circle().fill(Color.white))
 
-                Spacer()
+                    Text(name)
+                        .font(.title2)
+                        .bold()
 
-                Button("Add Task") {
-                    tasks.append(
-                        Task(
-                            title: "New Task",
-                            category: "Personal",
-                            isCompleted: false,
-                            time: "21:00"
-                        )
-                    )
+                    Text("Always learning, always growing")
+                        .foregroundColor(.gray)
                 }
             }
-            .padding()
 
-            List(tasks) { task in
+            VStack(spacing: 15) {
 
                 HStack {
 
-                    Image(systemName:
-                            task.isCompleted
-                          ? "checkmark.circle.fill"
-                          : "circle")
-
-                    VStack(alignment: .leading) {
-                        Text(task.title)
-                        Text(task.category)
-                            .font(.caption)
-                    }
+                    Label(studentID, systemImage: "person.fill")
 
                     Spacer()
 
-                    Text(task.time)
+                    Label("\(age)", systemImage: "birthday.cake.fill")
                 }
+
+                HStack {
+
+                    Label("\(gpa)", systemImage: "chart.bar.fill")
+
+                    Spacer()
+
+                    Label(
+                        isStudent ? "Yes" : "No",
+                        systemImage: "graduationcap.fill"
+                    )
+                }
+
+                Text("Better me, a brighter tomorrow!")
+                    .padding()
+
+                Button("Edit Profile") {
+
+                }
+                .buttonStyle(.borderedProminent)
             }
+            .padding()
+
+            Spacer()
 
             HStack {
+
                 Spacer()
-                Text("Today")
+
+                VStack {
+                    Image(systemName: "house.fill")
+                    Text("Profile")
+                }
+
                 Spacer()
-                Text("Stats")
+
+                VStack {
+                    Image(systemName: "book.fill")
+                    Text("Subjects")
+                }
+
                 Spacer()
-                Text("Settings")
+
+                VStack {
+                    Image(systemName: "gearshape.fill")
+                    Text("Settings")
+                }
+
                 Spacer()
             }
             .padding()
