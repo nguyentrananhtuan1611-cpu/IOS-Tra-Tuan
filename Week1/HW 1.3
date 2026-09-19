@@ -1,1 +1,134 @@
+import SwiftUI
 
+struct Task: Identifiable {
+    let id = UUID()
+    var title: String
+    var category: String
+    var isCompleted: Bool
+    var time: String
+}
+
+struct ContentView: View {
+
+    @State private var tasks = [
+        Task(title: "Read chapter 2", category: "Study", isCompleted: false, time: "09:00"),
+        Task(title: "Workout", category: "Health", isCompleted: true, time: "17:00"),
+        Task(title: "Finish lab report", category: "Work", isCompleted: false, time: "20:00"),
+        Task(title: "Call family", category: "Personal", isCompleted: false, time: "21:00")
+    ]
+
+    var body: some View {
+
+        VStack {
+
+            ZStack {
+
+                Rectangle()
+                    .fill(Color.blue.opacity(0.15))
+                    .frame(height: 140)
+
+                VStack {
+
+                    Text("Good Morning")
+                        .font(.title2)
+
+                    Text("Nguyen Van A")
+                        .font(.largeTitle)
+                        .bold()
+
+                    Text("Discipline today creates a brighter tomorrow.")
+                        .foregroundColor(.green)
+
+                    Text(Date(), style: .date)
+                        .font(.caption)
+                }
+            }
+
+            HStack {
+
+                Text("My Tasks")
+                    .font(.title2)
+                    .bold()
+
+                Spacer()
+
+                Button("Add Task") {
+
+                    tasks.append(
+                        Task(
+                            title: "New Task",
+                            category: "Personal",
+                            isCompleted: false,
+                            time: "22:00"
+                        )
+                    )
+                }
+            }
+            .padding()
+
+            List {
+
+                ForEach(tasks) { task in
+
+                    HStack {
+
+                        Image(systemName:
+                                task.isCompleted
+                                ? "checkmark.circle.fill"
+                                : "circle")
+                            .foregroundColor(
+                                task.isCompleted ? .green : .gray
+                            )
+
+                        VStack(alignment: .leading) {
+
+                            Text(task.title)
+
+                            Text(task.category)
+                                .font(.caption)
+                                .foregroundColor(.blue)
+                        }
+
+                        Spacer()
+
+                        Text(task.time)
+                    }
+                }
+            }
+
+            HStack {
+
+                Spacer()
+
+                VStack {
+                    Image(systemName: "house.fill")
+                    Text("Today")
+                        .font(.caption)
+                }
+
+                Spacer()
+
+                VStack {
+                    Image(systemName: "chart.bar.fill")
+                    Text("Stats")
+                        .font(.caption)
+                }
+
+                Spacer()
+
+                VStack {
+                    Image(systemName: "gearshape.fill")
+                    Text("Settings")
+                        .font(.caption)
+                }
+
+                Spacer()
+            }
+            .padding()
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
