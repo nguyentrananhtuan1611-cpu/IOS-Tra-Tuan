@@ -19,15 +19,15 @@ struct ContentView: View {
 
     var body: some View {
 
-        VStack {
+        VStack(spacing: 0) {
 
             ZStack {
 
                 Rectangle()
                     .fill(Color.blue.opacity(0.15))
-                    .frame(height: 140)
+                    .frame(height: 170)
 
-                VStack {
+                VStack(spacing: 8) {
 
                     Text("Good Morning")
                         .font(.title2)
@@ -52,8 +52,7 @@ struct ContentView: View {
 
                 Spacer()
 
-                Button("Add Task") {
-
+                Button {
                     tasks.append(
                         Task(
                             title: "New Task",
@@ -62,37 +61,61 @@ struct ContentView: View {
                             time: "22:00"
                         )
                     )
+                } label: {
+                    Label("Add Task", systemImage: "plus")
                 }
             }
             .padding()
 
             List {
 
-                ForEach(tasks) { task in
+                ForEach($tasks) { $task in
 
                     HStack {
 
-                        Image(systemName:
-                                task.isCompleted
+                        Button {
+                            task.isCompleted.toggle()
+                        } label: {
+                            Image(
+                                systemName: task.isCompleted
                                 ? "checkmark.circle.fill"
-                                : "circle")
+                                : "circle"
+                            )
                             .foregroundColor(
                                 task.isCompleted ? .green : .gray
                             )
+                            .font(.title2)
+                        }
 
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 4) {
 
-                            Text(task.title)
+                            TextField(
+                                "Task Title",
+                                text: $task.title
+                            )
+                            .textFieldStyle(.roundedBorder)
 
-                            Text(task.category)
-                                .font(.caption)
-                                .foregroundColor(.blue)
+                            TextField(
+                                "Category",
+                                text: $task.category
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .font(.caption)
+
+                            TextField(
+                                "Time",
+                                text: $task.time
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .font(.caption)
                         }
 
                         Spacer()
-
-                        Text(task.time)
                     }
+                    .padding(.vertical, 4)
+                }
+                .onDelete { indexSet in
+                    tasks.remove(atOffsets: indexSet)
                 }
             }
 
@@ -125,6 +148,7 @@ struct ContentView: View {
                 Spacer()
             }
             .padding()
+            .background(Color(.systemGray6))
         }
     }
 }
@@ -132,3 +156,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
